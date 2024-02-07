@@ -1,38 +1,67 @@
-.App {
-  text-align: center;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap");
+
+.buttonbluee {
+  background: linear-gradient(to left, #238d12 0%, #087027 50%, #0f8109 100%);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navImage {
+  width: auto;
+  height: 70px;
+}
+.getstart {
+  background-color: #ffd984;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.shake-on-hover:hover {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.bgclr {
+  background-color: #fee9cb;
 }
 
-.App-link {
-  color: #61dafb;
+/* Add this to your existing or a new stylesheet */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.font-protest {
+  font-family: "Protest Guerrilla", sans-serif;
 }
