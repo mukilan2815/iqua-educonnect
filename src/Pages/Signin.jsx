@@ -1,52 +1,82 @@
-import React, { useState } from "react";
-import girl from "../assets/girl.jpg";
+import React, { useState, useEffect } from "react";
+import girl from "../assets/students.png";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
-import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
+
 const Signin = () => {
-  const [studentId, setStudentId] = useState("");
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberPassword, setRememberPassword] = useState(false);
+
+  useEffect(() => {
+    const savedUsername = localStorage.getItem("savedUsername");
+    const savedPassword = localStorage.getItem("savedPassword");
+
+    if (savedUsername && savedPassword && rememberPassword) {
+      setUsername(savedUsername);
+      setPassword(savedPassword);
+    }
+  }, [rememberPassword]);
+
+  const handleLogin = () => {
+    console.log("logged in");
+    if (rememberPassword) {
+      localStorage.setItem("savedUsername", username);
+      localStorage.setItem("savedPassword", password);
+    }
+    navigate("/fields"); // Use navigate instead of history.push
+  };
+
   return (
     <>
-      <main className="flex bgclr overflow-hidden font-sans h-screen">
-        <div>
+      <div className="min-h-screen flex-col items-center justify-center bg-gray-100 overflow-y-hidden">
+        <Navbar />
+        <br />
+        <div className="flex justify-center">
+          <div className="bg-white p-8 z-10 hover:border-green-500 border-blue-300 border h-fit rounded shadow-md max-w-xs w-full">
+            <h2 className="text-2xl font-semibold mb-4">Login</h2>
+            <input
+              type="text"
+              className="p-2 mb-4 w-full border-2 focus:border-green-300 border-blue-500 focus:rounded-xl outline-none transition-all"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              className="p-2 mb-4 w-full border-2 focus:border-green-300 border-blue-500 focus:rounded-xl outline-none transition-all"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <div className="flex items-center mb-6">
+              <input
+                type="checkbox"
+                className="mr-2"
+                checked={rememberPassword}
+                onChange={() => setRememberPassword(!rememberPassword)}
+              />
+              <label className="text-sm">Remember Password</label>
+            </div>
+            <button
+              className="bg-green-500 text-white p-2 w-full hover:rounded-lg hover:bg-green-600 transition-all"
+              onClick={handleLogin}
+            >
+              Sign In
+            </button>
+          </div>
+
           <img
             src={girl}
-            alt="girl"
-            className=" hidden md:block h-screen rounded-r-3xl"
+            className="hidden z-0 absolute left-0 md:block md:w-1/2 md:h-full object-cover"
+            alt="Illustration"
           />
         </div>
-        <div className=" m-10">
-          <h1 className=" font-extrabold md:text-2xl text-5xl lg:text-3xl text-blue-600">
-            Login Your Account
-          </h1>
-          <div className="my-2 flex">
-            <label className="font-bold md:text-sm lg:text-xl">
-              Student ID
-              <input
-                type="text"
-                placeholder="Your ID"
-                className="lg:px-4 md:px-2 md:py-1 py-3 px-3 w-3/4  lg:py-2 rounded-lg border-none outline-none mx-2 focus:ring focus:border-blue-300 bg-gray-200"
-              />
-            </label>
-          </div>
-          <div className="my-4">
-            <label className="font-bold lg:text-xl md:text-sm">
-              Password
-              <input
-                type="password"
-                placeholder="Password"
-                className="lg:px-4 md:px-2 md:py-1 py-3 px-3 w-3/4  lg:py-2 rounded-lg border-none outline-none mx-2 focus:ring focus:border-blue-300 bg-gray-200"
-              />
-            </label>
-          </div>
-          <Link to="/fields" className="text-blue-600">
-            <button className="getstart px-7 py-2 rounded-none  md:px-7 md:py-1 md:text-sm lg:px-12 lg:py-3 lg:text-base md:rounded-full bg-gradient-to-r text-white font-semibold shadow-md transform hover:shadow-none transition-none hover:bg-opacity-80">
-              Login
-            </button>
-          </Link>
-        </div>
-      </main>
+      </div>
+      <Footer />
     </>
   );
 };
